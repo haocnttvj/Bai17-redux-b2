@@ -2,9 +2,9 @@
 
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { fetchBooks, addBook } from "../redux/actions";
+import { fetchBooks, addBook, updateBook, deleteBook } from "../redux/actions";
 
-const BookList = ({ books, fetchBooks, addBook }) => {
+const BookList = ({ books, fetchBooks, addBook, updateBook, deleteBook }) => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [isbn, setIsbn] = useState("");
@@ -23,6 +23,19 @@ const BookList = ({ books, fetchBooks, addBook }) => {
     setTitle("");
     setAuthor("");
     setIsbn("");
+  };
+
+  const handleUpdateBook = (id) => {
+    const updatedBook = {
+      title,
+      author,
+      isbn,
+    };
+    updateBook(id, updatedBook);
+  };
+
+  const handleDeleteBook = (id) => {
+    deleteBook(id);
   };
 
   return (
@@ -54,6 +67,8 @@ const BookList = ({ books, fetchBooks, addBook }) => {
           <h3>{book.title}</h3>
           <p>Author: {book.author}</p>
           <p>ISBN: {book.isbn}</p>
+          <button onClick={() => handleUpdateBook(book.id)}>Update</button>
+          <button onClick={() => handleDeleteBook(book.id)}>Delete</button>
         </div>
       ))}
     </div>
@@ -66,4 +81,9 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { fetchBooks, addBook })(BookList);
+export default connect(mapStateToProps, {
+  fetchBooks,
+  addBook,
+  updateBook,
+  deleteBook,
+})(BookList);

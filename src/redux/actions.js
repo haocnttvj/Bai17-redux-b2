@@ -18,12 +18,12 @@ export const addBook = (book) => ({
   payload: book,
 });
 
-export const updateBook = (id, book) => ({
+export const updateBook = (id, updatedBook) => ({
   type: UPDATE_BOOK,
-  payload: { id, book },
+  payload: { id, updatedBook },
 });
 
 export const deleteBook = (id) => ({
   type: DELETE_BOOK,
-  payload: id,
+  payload: { id },
 });
